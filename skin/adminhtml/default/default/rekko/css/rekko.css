@@ -1,0 +1,24 @@
+.smashheading
+{
+    font-weight: bold;
+}
+.troubleShootContents
+{
+    border-bottom: 1px solid #D6D6D6;
+    margin-bottom: 5px;
+text-align: justify;
+padding-bottom: 5px;
+}
+div.troubleShootContents:last-child
+{
+    border-bottom: none;
+    
+}
+.rekkoDetails li
+{
+    list-style: disc;
+}
+ul.rekkoDetails
+{
+    margin-left: 14px;
+}

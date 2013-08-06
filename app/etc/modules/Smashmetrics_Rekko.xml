@@ -1,0 +1,9 @@
+<?xml version = "1.0"?>
+<config>
+    <modules>
+        <Smashmetrics_Rekko>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Smashmetrics_Rekko>
+    </modules>
+</config>

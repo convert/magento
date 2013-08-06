@@ -1,0 +1,105 @@
+<?php
+$moduleName = 'Smashmetrics_Rekko'; //eg Mage_Cms
+$merchantID = Mage::getStoreConfig('rekko_section/rekko_group/merchant_ID');
+$domain_name = Mage::getStoreConfig('rekko_section/rekko_group/domain_name');
+$enabled = Mage::getStoreConfig('advanced/modules_disable_output/' . $moduleName);
+?>
+<?php if ($enabled == 0): ?>
+    <!--Script tag for setup.js-->
+    <script type="text/javascript">
+        var cvtSiteName = '<?php echo $domain_name; ?>';
+        var cvtJsHost = (("https:" == document.location.protocol) ? "https://dnhgz729v27ca.cloudfront.net/" : "http://use.convertglobal.com/");
+        document.write(unescape("%3Cscript src='" + cvtJsHost + "client/setup.js' type='text/javascript'%3E%3C/script%3E"));
+        if (!window.convert_cart) {
+            window.convert_cart = {};
+            convert_cart.shoppingCartItems = new Array();
+        }
+        if (!window.convert_profile) {
+            window.convert_profile = {};
+        }
+    </script>
+    <script type="text/javascript">
+        window.convert = new Convert("<?php echo $merchantID; ?>");
+        convert.init();
+    </script>
+    <!--End Script tag for setup.js-->
+    <!--Tagging Your Cart for Items-->
+    <?php if (count(Smashmetrics_Rekko_Block_Rekko::getCartItems()) > 0): ?>
+        <script type="text/javascript">
+            if (!window.convert_cart) {
+                window.convert_cart = {};
+                convert_cart.shoppingCartItems = new Array();
+            }
+    <?php    $products = Smashmetrics_Rekko_Block_Rekko::getCartItems();
+                  foreach ($products as $items) { ?>
+                var convert_item = {};
+                convert_item.sku = "<?php echo $items['sku']; ?>";
+                convert_item.category = "<?php echo $items['category']; ?>";
+                convert_item.quantity =<?php echo $items['qty']; ?>;
+                convert_item.price =<?php echo $items['price']; ?>;
+                convert_cart.shoppingCartItems.push(convert_item);
+        <?php } ?>
+        </script>
+    <?php endif; ?>
+<!--End Tagging Your Cart for Items-->
+<!--Shopping Cart Tagging-->
+    <?php
+    $orderdetails = Smashmetrics_Rekko_Block_Rekko::getOrderDetails();
+    if ($orderdetails['quote_id'] > 0 or $orderdetails['quote_id'] == 'successpage'):
+        ?>
+        <!--order tagging code-->
+        <script type="text/javascript">
+                if (!window.convert_cart) {
+                window.convert_cart = {};
+                convert_cart.shoppingCartItems = new Array();
+                }
+                convert_cart.totalCost =<?php echo $orderdetails['grand_total']; ?>;
+        <?php if ($orderdetails['tax'] != ''): ?> 
+                convert_cart.taxes =<?php echo $orderdetails['tax']; ?>;
+        <?php endif; ?>
+                convert_cart.discount =<?php echo $orderdetails['discount']; ?>;
+        <?php if ($orderdetails['shipping_total'] != ''): ?>
+                convert_cart.shipping =<?php echo $orderdetails['shipping_total']; ?>;
+        <?php endif; ?>
+        <?php if ($orderdetails['coupon_code'] != ''): ?>
+                convert_cart.promoCode = "<?php echo $orderdetails['coupon_code']; ?>";
+        <?php endif; ?>
+        <?php if ($orderdetails['orderid'] != ''): ?>
+                convert_cart.orderId = "<?php echo $orderdetails['orderid']; ?>";
+        <?php endif; ?>
+                </script>
+        <!--order tagging code-->
+        <?php
+    endif;
+
+    if ($orderdetails['quote_id'] == 'successpage'):
+        ?>
+        <!--End Shopping Cart Tagging-->
+        <!--Order confirmation tagging-->
+        <script type="text/javascript">
+            convert_cart.isPurchased = true;
+        </script>
+        <!--End Order confirmation tagging-->
+    <?php endif; ?>
+        <!--Visitor Profile Tagging-->
+
+  <?php
+    $customerDet = Smashmetrics_Rekko_Block_Rekko::getCustomerDetails();
+
+    if ($customerDet):
+        $group_name = Mage::getModel('customer/group')->load($customerDet['group_id'])->getCode();
+        $group_name=($group_name=='NOT LOGGED IN' AND $customerDet['group_id']==0)?'Guest':$group_name;
+        ?>
+       <script type="text/javascript">
+            if (!window.convert_profile) {
+                window.convert_profile = {};
+            }
+            convert_profile.firstName = "<?php echo $customerDet['firstname']; ?>";
+            convert_profile.lastName = "<?php echo $customerDet['lastname']; ?>";
+            convert_profile.email = "<?php echo $customerDet['email']; ?>";
+            convert_profile.login = "<?php echo $customerDet['email']; ?>";
+            convert_profile.customertype = "<?php echo $group_name; ?>";
+        </script>
+  <!--End Visitor Profile Tagging-->
+    <?php endif; ?>
+<?php endif; ?>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+    <name>Smashmetirics_Rekko</name>
+    <version>1.0.0</version>
+    <stability>alpha</stability>
+    <license uri="http://www.opensource.org/licenses/osl-3.0.php">OSL v3.0</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Rekko extension for Magento</summary>
+    <description>This extension is used to embed rekko script tags to magento </description>
+    <notes>This is first version of rekko module for magento</notes>
+    <authors><author><name>Alankar Singh</name><user>alan_ispg</user><email>alankar_singh@ispg.in</email></author></authors>
+    <date>2013-07-09</date>
+    <time>11:39:31</time>
+    <contents><target name="magelocal"><dir name="Smashmetrics"><dir name="Rekko"><dir name="Block"><file name="Rekko.php" hash="a4e21b2d9eabc6bee0d9086243065a26"/></dir><dir name="Helper"><file name="Data.php" hash="cb50b3e8870f8f1bfd06c2bdfb439810"/></dir><dir name="Model"><file name="Observer.php" hash="42d950252398305e12344e1c438699aa"/></dir><dir name="controllers"><file name="InfoController.php" hash="562dd1cf0526b27f781c4151204188a8"/></dir><dir name="etc"><file name="adminhtml.xml" hash="64ae6be6a8eb16489c805e494040d250"/><file name="config.xml" hash="153a076f30eab73f365616b8c7799f5c"/><file name="system.xml" hash="a97f3e8929977bc522b8da2a3c3c7b05"/></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Smashmetrics_Rekko.xml" hash="4a90516598614304602058f6db09a3e5"/></dir></target><target name="magedesign"><dir name="adminhtml"><dir name="default"><dir name="default"><dir name="layout"><file name="rekko.xml" hash="b2ee3f2f8f3562e7f19f04f12465da38"/></dir><dir name="template"><dir name="rekko"><file name="info.phtml" hash="77deb08cdad05805df98c966ed154926"/></dir></dir></dir></dir></dir><dir name="frontend"><dir name="default"><dir name="default"><dir name="layout"><file name="rekko.xml" hash="091e229c05ecb9edc5c71ac966b7156f"/></dir><dir name="template"><dir name="rekko"><file name="rekko.phtml" hash="fd6493c44f6ef45da010f982468d7b82"/><file name="rekkoproduct.phtml" hash="9623b0dda370603723795bffe21d410c"/></dir></dir></dir></dir></dir></target><target name="mageskin"><dir name="adminhtml"><dir name="default"><dir name="default"><dir name="rekko"><dir name="css"><file name="rekko.css" hash="c2a9a5d57b90b38d178d699ef770961c"/></dir><dir name="images"><file name="logo.png" hash="25d0a4ecb9af7cb4b0c10be0c3bc28bf"/></dir></dir></dir></dir></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.2.0</min><max>6.0.0</max></php></required></dependencies>
+</package>
