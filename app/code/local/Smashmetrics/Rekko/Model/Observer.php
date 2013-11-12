@@ -17,12 +17,25 @@
  */
 ?>
 <?php
-
+session_start();
 class Smashmetrics_Rekko_Model_Observer {
 
     public function addRekkoCode($observer) {
         $block = $observer->getBlock();
         $transport = $observer->getTransport();
     }
+ 
+	public function newsletterSubscriberSave(Varien_Event_Observer $observer) {
 
+	    $subscriber = $observer->getEvent()->getSubscriber();
+	    $email = $subscriber->getEmail();
+		Mage::getSingleton('core/session')->setNewsSubscriber($email);
+	    return $this;
+	}
+	public function customerRegisterSuccess(Varien_Event_Observer $observer)
+    {
+        $email = $observer->getEvent()->getCustomer()->getEmail();
+        Mage::getSingleton('core/session')->setNewUser($email);
+	    return $this;
+    }
 }

@@ -21,6 +21,17 @@ class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template {
 
         return Mage::getStoreConfig('rekko_section/rekko_group/domain_name', Mage::app()->getStore());
     }
+	
+	public function email_Call_Newsletter() {
+
+        return Mage::getStoreConfig('rekko_section/rekko_group/email_Call_Newsletter', Mage::app()->getStore());
+    }
+	
+	public function email_Call_User() {
+
+        return Mage::getStoreConfig('rekko_section/rekko_group/email_Call_User', Mage::app()->getStore());
+    }
+
 
     public function getOrderDetails() {
         $request = $this->getRequest();

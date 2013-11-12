@@ -46,6 +46,24 @@
 	                 </rekko>
 	             </observers>
 	         </core_block_abstract_to_html_after>
+			 <newsletter_subscriber_save_after>
+	             <observers>
+	                 <newsub>
+	                         <type>singleton</type>
+	                         <class>Smashmetrics_Rekko_Model_Observer</class>
+	                         <method>newsletterSubscriberSave</method>
+	                 </newsub>
+	             </observers>
+	         </newsletter_subscriber_save_after>
+			  <customer_register_success>
+	             <observers>
+	                 <newsub>
+	                         <type>singleton</type>
+	                         <class>Smashmetrics_Rekko_Model_Observer</class>
+	                         <method>customerRegisterSuccess</method>
+	                 </newsub>
+	             </observers>
+	         </customer_register_success>
          </events>
           <models>
             <smash_rekkomodel>

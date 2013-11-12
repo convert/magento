@@ -1,8 +1,15 @@
 <?php
+ob_flush();
 $moduleName = 'Smashmetrics_Rekko'; //eg Mage_Cms
 $merchantID = Mage::getStoreConfig('rekko_section/rekko_group/merchant_ID');
 $domain_name = Mage::getStoreConfig('rekko_section/rekko_group/domain_name');
+$email_Call_Newsletter = Mage::getStoreConfig('rekko_section/rekko_group/email_Call_Newsletter');
+$email_Call_User = Mage::getStoreConfig('rekko_section/rekko_group/email_Call_User');
 $enabled = Mage::getStoreConfig('advanced/modules_disable_output/' . $moduleName);
+
+
+
+  
 ?>
 <?php if ($enabled == 0): ?>
     <!--Script tag for setup.js-->
@@ -102,4 +109,42 @@ $enabled = Mage::getStoreConfig('advanced/modules_disable_output/' . $moduleName
         </script>
   <!--End Visitor Profile Tagging-->
     <?php endif; ?>
+	
+	 <!--Email Call-->
+	
+			<!--Newsletter Signup-->
+			<?php if ($email_Call_Newsletter == 1):
+					$myData = Mage::getSingleton('core/session')->getNewsSubscriber();
+					if(isset($myData)) {
+					?>
+					<script type="text/javascript">
+						window.convert = new Convert("<?php echo $myData; ?>");
+						convert.track();
+					</script>
+					<?php
+					Mage::getSingleton('core/session')->unsNewsSubscriber();
+					}
+			endif; ?>
+			<!--End Newsletter Signup-->
+	 
+			<!--User Signup-->
+			<?php if ($email_Call_User == 1):
+					$myData1 = Mage::getSingleton('core/session')->getNewUser();
+					if(isset($myData1)) {
+					?>
+					<script type="text/javascript">
+						window.convert = new Convert("<?php echo $myData1; ?>");
+						convert.track();
+					</script>
+					<?php
+					Mage::getSingleton('core/session')->unsNewUser();
+					}
+			endif; ?>
+			<!--End User Signup-->
+	
+	
+	<!--End Email Call-->
+	
+	
+
 <?php endif; ?>
