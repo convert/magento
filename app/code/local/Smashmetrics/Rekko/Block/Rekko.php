@@ -2,11 +2,6 @@
 
 class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template {
 
-    protected function _construct() {
-        parent::_construct();
-        $this->setTemplate('rekko/rekko.phtml');
-    }
-
     public function getPluginEnabledStatus() {
 
         return Mage::getStoreConfig('rekko_section/rekko_group/enabled', Mage::app()->getStore());
