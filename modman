@@ -1,0 +1,7 @@
+app/code/local/Smashmetrics/ app/code/local/Smashmetrics/
+app/design/frontend/base/default/layout/rekko.xml app/design/frontend/base/default/layout/rekko.xml
+app/design/frontend/base/default/template/rekko/ app/design/frontend/base/default/template/rekko/
+app/design/adminhtml/base/default/layout/rekko.xml app/design/adminhtml/base/default/layout/rekko.xml
+app/design/adminhtml/base/default/template/rekko/ app/design/adminhtml/base/default/template/rekko/
+app/etc/modules/Smashmetrics_Rekko.xml app/etc/modules/Smashmetrics_Rekko.xml 
+skin/adminhtml/default/default/rekko/ skin/adminhtml/default/default/rekko/
