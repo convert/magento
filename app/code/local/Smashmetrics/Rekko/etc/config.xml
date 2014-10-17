@@ -16,11 +16,6 @@
         <class>Smashmetrics_Rekko_Block</class>        
       </rekko>
     </blocks> 
-    <helpers> <!-- a definition of the module helpers namespace -->
-      <rekko>
-        <class>Smashmetrics_Rekko_Helper</class>
-      </rekko>
-    </helpers>
     <resources>
       <rekko_setup>
         <setup>
