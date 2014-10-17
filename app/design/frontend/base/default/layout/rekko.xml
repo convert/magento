@@ -21,7 +21,7 @@ Default layout, loads most of the pages
     <default>
         <!-- Mage_PiwikAnalytics -->
         <reference name="before_body_end">
-            <block type="piwikanalytics/piwik" name="piwik_analytics" as="piwik_analytics" template="piwikanalytics/piwik.phtml" />
+          <block type="core/template" name="rekko" template="rekko/rekko.phtml" /> 
         </reference>
     </default>
 </layout>
