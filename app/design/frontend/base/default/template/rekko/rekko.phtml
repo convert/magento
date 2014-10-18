@@ -9,13 +9,6 @@ $enabled = Mage::getStoreConfig('advanced/modules_disable_output/' . $moduleName
     <script type="text/javascript">
         var cvtJsHost = (("https:" == document.location.protocol) ? "https://dnhgz729v27ca.cloudfront.net/" : "http://use.convertglobal.com/");
         document.write(unescape("%3Cscript src='" + cvtJsHost + "client/setup.js' type='text/javascript'%3E%3C/script%3E"));
-        if (!window.convert_cart) {
-            window.convert_cart = {};
-            convert_cart.shoppingCartItems = new Array();
-        }
-        if (!window.convert_profile) {
-            window.convert_profile = {};
-        }
     </script>
     <script type="text/javascript">
         window.convert = new Convert("<?php echo $merchantID; ?>");
