@@ -32,6 +32,7 @@ class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template {
 
     $quote_id = $cart->getQuoteId();
     if ($module == 'checkout' && $controller == 'onepage' && $action == 'success') {
+      Mage::log("Getting order details for checkout");
       $orderId = $cart->getLastOrderId();
       $lastOrderId = Mage::getSingleton('checkout/session')
         ->getLastRealOrderId();
@@ -49,6 +50,7 @@ class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template {
       $orderDet['shipping_total'] = $_totalData['base_shipping_amount'];
       $orderDet['quote_id'] = 'successpage';
     } else {
+      Mage::log("Getting order details for checkout process");
       $quote_id = $cart->getQuoteId();
       $item_quote = Mage::getModel('sales/quote')->load($quote_id);
       $totals = $cart->getQuote()->getTotals();
@@ -58,7 +60,7 @@ class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template {
       } else {
         $tax = '';
       }
-        
+
       $orderDet['grand_total'] = $item_quote->grand_total;
       $orderDet['coupon_code'] = $item_quote->coupon_code;
       $orderDet['discount'] = $item_quote->subtotal - $item_quote->subtotal_with_discount;
@@ -71,12 +73,13 @@ class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template {
     return $orderDet;
   }
     
-  public function getCustomerDetails() {
-      
+  public function getCustomerDetails() {      
     if ($this->helper('customer')->isLoggedIn()) {
+      Mage::log("Getting customer details for a logged in customer");
       $customer = Mage::getSingleton('customer/session')->getCustomer();
       $customerData = Mage::getModel('customer/customer')->load($customer->getId())->getData();
     } else  {
+      Mage::log("Getting customer details for a guest");
       $request = $this->getRequest();
       $module = $request->getModuleName();
       $controller = $request->getControllerName();
@@ -101,6 +104,7 @@ class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template {
         $guestUser['group_id']=$_totalData['customer_group_id'];
         $customerData = $guestUser;
       } else {
+        Mage::log("Couldn't get customer details returning null");
         $customerData = Null;
       }            
     }
@@ -116,6 +120,7 @@ class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template {
     $cart = Mage::getSingleton('checkout/session');
     $product = array();
     if ($module == 'checkout' && $controller == 'onepage' && $action == 'success') {
+      Mage::log("Getting cart items for a checkout");
       $orderId = $cart->getLastOrderId();
       $lastOrderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
       $order = Mage::getModel('sales/order')->load($orderId);
@@ -137,7 +142,8 @@ class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template {
 
         $i++;
       }
-    }else {   
+    } else {
+      Mage::log("Getting order details for a checkout process");
       $i = 0;
       foreach ($cart->getQuote()->getAllItems() as $item) {
         $product[$i]['productId'] = $item->getProductId();
