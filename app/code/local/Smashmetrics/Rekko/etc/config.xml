@@ -6,6 +6,11 @@
     </Smashmetrics_Rekko>
   </modules>
   <global> <!-- global scope, also known as the default configuration area -->
+    <models>
+      <rekko>
+        <class>Smashmetrics_Rekko_Model</class>
+      </rekko>
+    </models>
     <blocks>
       <rekko>
         <class>Smashmetrics_Rekko_Block</class>        
