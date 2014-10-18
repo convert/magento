@@ -21,7 +21,7 @@
   <default>
     <!-- Mage_PiwikAnalytics -->
     <reference name="before_body_end">
-      <block type="core/template" name="rekko" template="rekko/rekko.phtml" /> 
+      <block type="rekko/rekko" name="rekko" template="rekko/rekko.phtml" /> 
     </reference>
   </default>
 </layout>
