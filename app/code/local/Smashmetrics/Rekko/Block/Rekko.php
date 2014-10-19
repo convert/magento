@@ -157,25 +157,10 @@ class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template
 
                 $i++;
             }
-        } else {
-            Mage::log("Getting order details for a checkout process");
-            $i = 0;
-            foreach ($cart->getQuote()->getAllItems() as $item) {
-                $product[$i]['productId'] = $item->getProductId();
-                $product[$i]['sku'] = $item->getSku();
-                $product[$i]['name'] = $item->getName();
-                $product[$i]['qty'] = $item->getQty();
-                $product[$i]['price'] = $item->getPrice();
-                $catIds = $item->getProduct()->getCategoryIds();
-                $category = array();
-                foreach ($catIds AS $cid) {
-                    $category[] = Mage::getModel('catalog/category')->load($cid)->getName();
-                }
-                $product[$i]['category'] = implode(',', $category);
-                $i++;
-            }
+            return $product;
         }
-        return $product;
+
+        Mage::log("Not in a cart module. No need to tag e-commerce");
     }
 
 }
