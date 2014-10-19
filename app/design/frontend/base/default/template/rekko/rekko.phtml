@@ -10,7 +10,7 @@ $enabled = Mage::getStoreConfig('advanced/modules_disable_output/' . $moduleName
         var cvtJsHost = (("https:" == document.location.protocol)
             ? "https://dnhgz729v27ca.cloudfront.net/" : "http://use.convertglobal.com/");
         document.write(unescape("%3Cscript src='" + cvtJsHost
-                                    + "client/setup.js' type='text/javascript'%3E%3C/script%3E"));
+                                    + "client/staging_setup.js' type='text/javascript'%3E%3C/script%3E"));
     </script>
     <?php $cartItems = $this->getCartItems(); ?>
     <?php if (count($cartItems) > 0): ?>
