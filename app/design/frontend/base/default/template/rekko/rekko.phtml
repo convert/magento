@@ -48,9 +48,6 @@ $disabled = Mage::getStoreConfig('advanced/modules_disable_output/' . $moduleNam
                 convert_cart.shoppingCartItems = new Array();
             }
             convert_cart.totalCost =<?php echo $orderdetails['grand_total']; ?>;
-            <?php if ($orderdetails['tax'] != ''): ?>
-            convert_cart.taxes =<?php echo $orderdetails['tax']; ?>;
-            <?php endif; ?>
             convert_cart.discount =<?php echo $orderdetails['discount']; ?>;
             <?php if ($orderdetails['shipping_total'] != ''): ?>
             convert_cart.shipping =<?php echo $orderdetails['shipping_total']; ?>;
