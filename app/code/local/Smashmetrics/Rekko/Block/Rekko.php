@@ -42,7 +42,7 @@ class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template
         $cart = Mage::getSingleton('checkout/session');
 
         $quote_id = $cart->getQuoteId();
-        if ($module == 'checkout' && $controller == 'onepage' && $action == 'success') {
+        if ($module == 'checkout') {
             Mage::log("Getting order details for checkout");
             $orderId = $cart->getLastOrderId();
             $lastOrderId = Mage::getSingleton('checkout/session')
@@ -60,28 +60,14 @@ class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template
             $orderDet['orderid'] = $_totalData['increment_id'];
             $orderDet['shipping_total'] = $_totalData['base_shipping_amount'];
             $orderDet['quote_id'] = 'successpage';
-        } else {
-            Mage::log("Getting order details for checkout process");
-            $quote_id = $cart->getQuoteId();
-            $item_quote = Mage::getModel('sales/quote')->load($quote_id);
-            $totals = $cart->getQuote()->getTotals();
-
-            if (isset($totals['tax']) && $totals['tax']->getValue()) {
-                $tax = round($totals['tax']->getValue()); //Tax value if present
-            } else {
-                $tax = '';
+            if ($action == 'success') {
+               $orderDet['orderid'] =  $_totalData['increment_id'];
             }
-
-            $orderDet['grand_total'] = $item_quote->grand_total;
-            $orderDet['coupon_code'] = $item_quote->coupon_code;
-            $orderDet['discount'] = $item_quote->subtotal - $item_quote->subtotal_with_discount;
-            $orderDet['tax'] = $tax;
-            $orderDet['orderid'] = '';
-            $orderDet['shipping_total'] = '';
-            $orderDet['quote_id'] = $quote_id;
+            return $orderDet;
         }
 
-        return $orderDet;
+        Mage::log("Not in a cart module. No need to tag order details");
+
     }
 
     public function getCustomerDetails()
@@ -134,7 +120,7 @@ class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template
         $action = $request->getActionName();
         $cart = Mage::getSingleton('checkout/session');
         $product = array();
-        if ($module == 'checkout' && $controller == 'onepage' && $action == 'success') {
+        if ($module == 'checkout') {
             Mage::log("Getting cart items for a checkout");
             $orderId = $cart->getLastOrderId();
             $lastOrderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
@@ -160,7 +146,7 @@ class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template
             return $product;
         }
 
-        Mage::log("Not in a cart module. No need to tag e-commerce");
+        Mage::log("Not in a cart module. No need to tag cart items");
     }
 
 }
