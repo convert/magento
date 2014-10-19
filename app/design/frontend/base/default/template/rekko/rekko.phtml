@@ -19,12 +19,12 @@ $enabled = Mage::getStoreConfig('advanced/modules_disable_output/' . $moduleName
                 window.convert_cart = {};
                 convert_cart.shoppingCartItems = new Array();
             }
-            <?php foreach ($products as $items) { ?>
+            <?php foreach ($cartItems as $item) { ?>
             var convert_item = {};
-            convert_item.sku = "<?php echo $items['sku']; ?>";
-            convert_item.category = "<?php echo $items['category']; ?>";
-            convert_item.quantity =<?php echo $items['qty']; ?>;
-            convert_item.price =<?php echo $items['price']; ?>;
+            convert_item.sku = "<?php echo $item['sku']; ?>";
+            convert_item.category = "<?php echo $item['category']; ?>";
+            convert_item.quantity =<?php echo $item['qty']; ?>;
+            convert_item.price =<?php echo $item['price']; ?>;
             convert_cart.shoppingCartItems.push(convert_item);
             <?php } ?>
         </script>
