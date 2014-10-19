@@ -37,14 +37,12 @@ class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template
     {
         $request = $this->getRequest();
         $module = $request->getModuleName();
-        $controller = $request->getControllerName();
         $action = $request->getActionName();
         $cart = Mage::getSingleton('checkout/session');
 
-        $quote_id = $cart->getQuoteId();
+        //Only tag shopping cart pages.
         if ($module == 'checkout') {
             Mage::log("Getting order details for checkout");
-            $orderId = $cart->getLastOrderId();
             $lastOrderId = Mage::getSingleton('checkout/session')
                 ->getLastRealOrderId();
             $orderId = Mage::getModel('sales/order')
@@ -66,7 +64,7 @@ class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template
             return $orderDet;
         }
 
-        Mage::log("Not in a cart module. No need to tag order details");
+        Mage::log("Not in a cart module. No need to show order details");
 
     }
 
@@ -116,10 +114,11 @@ class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template
     {
         $request = $this->getRequest();
         $module = $request->getModuleName();
-        $controller = $request->getControllerName();
-        $action = $request->getActionName();
         $cart = Mage::getSingleton('checkout/session');
+
         $product = array();
+
+        //Only tag on checkout pages.
         if ($module == 'checkout') {
             Mage::log("Getting cart items for a checkout");
             $orderId = $cart->getLastOrderId();
