@@ -38,8 +38,8 @@ class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template
         $request = $this->getRequest();
         $module = $request->getModuleName();
         $action = $request->getActionName();
-        $cart = Mage::getSingleton('checkout/session');
 
+        $orderDet = array();
         //Only tag shopping cart pages.
         if ($module == 'checkout') {
             Mage::log("Getting order details for checkout");
