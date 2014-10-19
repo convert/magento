@@ -62,7 +62,6 @@ class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template
                 $orderDet['grand_total'] = $_totalData['base_grand_total'];
                 $orderDet['coupon_code'] = $_totalData['coupon_code'];
                 $orderDet['discount'] = abs($_totalData['base_discount_amount']);
-                $orderDet['tax'] = $_totalData['base_tax_amount'];
                 $orderDet['orderid'] = $_totalData['increment_id'];
                 $orderDet['shipping_total'] = $_totalData['base_shipping_amount'];
 
@@ -84,6 +83,8 @@ class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template
                 $orderDet['coupon_code'] = $item_quote->coupon_code;
                 $orderDet['discount'] = $item_quote->subtotal - $item_quote->subtotal_with_discount;
                 $orderDet['quote_id'] = $quote_id;
+                $orderDet['orderid'] = '';
+                $orderDet['shipping_total'] = '';
             }
         }
         return $orderDet;
