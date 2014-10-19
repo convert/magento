@@ -47,46 +47,45 @@ class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template
             return $orderDet;
         }
 
-        if ($module == 'checkout') {
-            //This is an order confirmation page.
-            if ($controller == 'onepage' && $action == 'success') {
-                Mage::log("Getting order details on confirmation page.");
-                $lastOrderId = Mage::getSingleton('checkout/session')
-                    ->getLastRealOrderId();
-                $orderId = Mage::getModel('sales/order')
-                    ->loadByIncrementId($lastOrderId)
-                    ->getEntityId();
-                $order = Mage::getModel('sales/order')->load($orderId);
-                $_totalData = $order->getData();
+        //If this is an order confirmation page.
+        if ($controller == 'onepage' && $action == 'success') {
+            Mage::log("Getting order details on confirmation page.");
+            $lastOrderId = Mage::getSingleton('checkout/session')
+                ->getLastRealOrderId();
+            $orderId = Mage::getModel('sales/order')
+                ->loadByIncrementId($lastOrderId)
+                ->getEntityId();
+            $order = Mage::getModel('sales/order')->load($orderId);
+            $_totalData = $order->getData();
 
-                $orderDet['grand_total'] = $_totalData['base_grand_total'];
-                $orderDet['coupon_code'] = $_totalData['coupon_code'];
-                $orderDet['discount'] = abs($_totalData['base_discount_amount']);
-                $orderDet['orderid'] = $_totalData['increment_id'];
-                $orderDet['shipping_total'] = $_totalData['base_shipping_amount'];
+            $orderDet['grand_total'] = $_totalData['base_grand_total'];
+            $orderDet['coupon_code'] = $_totalData['coupon_code'];
+            $orderDet['discount'] = abs($_totalData['base_discount_amount']);
+            $orderDet['orderid'] = $_totalData['increment_id'];
+            $orderDet['shipping_total'] = $_totalData['base_shipping_amount'];
 
-                // TODO: quote_id is used by phtml to determine whether there was a purchase or not.
-                // this is bad and should be replaced by a proper object.
-                $orderDet['quote_id'] = 'successpage';
-                if ($action == 'success') {
-                    $orderDet['orderid'] =  $_totalData['increment_id'];
-                }
-            } else {
-                //Anywhere else in the checkout process.
-                Mage::log("Getting order details on the checkout process (before confirmation page)");
-
-                $cart = Mage::getSingleton('checkout/session');
-                $quote_id = $cart->getQuoteId();
-                $item_quote = Mage::getModel('sales/quote')->load($quote_id);
-
-                $orderDet['grand_total'] = $item_quote->grand_total;
-                $orderDet['coupon_code'] = $item_quote->coupon_code;
-                $orderDet['discount'] = $item_quote->subtotal - $item_quote->subtotal_with_discount;
-                $orderDet['quote_id'] = $quote_id;
-                $orderDet['orderid'] = '';
-                $orderDet['shipping_total'] = '';
+            // TODO: quote_id is used by phtml to determine whether there was a purchase or not.
+            // this is bad and should be replaced by a proper object.
+            $orderDet['quote_id'] = 'successpage';
+            if ($action == 'success') {
+                $orderDet['orderid'] =  $_totalData['increment_id'];
             }
+        } else {
+            //Anywhere else in the checkout process.
+            Mage::log("Getting order details on the checkout process (before confirmation page)");
+
+            $cart = Mage::getSingleton('checkout/session');
+            $quote_id = $cart->getQuoteId();
+            $item_quote = Mage::getModel('sales/quote')->load($quote_id);
+
+            $orderDet['grand_total'] = $item_quote->grand_total;
+            $orderDet['coupon_code'] = $item_quote->coupon_code;
+            $orderDet['discount'] = $item_quote->subtotal - $item_quote->subtotal_with_discount;
+            $orderDet['quote_id'] = $quote_id;
+            $orderDet['orderid'] = '';
+            $orderDet['shipping_total'] = '';
         }
+
         return $orderDet;
 
     }
@@ -137,15 +136,22 @@ class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template
     {
         $request = $this->getRequest();
         $module = $request->getModuleName();
+        $controller = $request->getControllerName();
+        $action = $request->getActionName();
         $cart = Mage::getSingleton('checkout/session');
 
         $product = array();
 
         //Only tag on checkout pages.
-        if ($module == 'checkout') {
-            Mage::log("Getting cart items for a checkout");
+        if ($module != 'checkout') {
+            Mage::log("Not in a cart module. No need to tag order details");
+            return $product;
+        }
+
+        //If this is an order confirmation page.
+        if ($controller == 'onepage' && $action == 'success') {
+            Mage::log("Getting cart items on confirmation page.");
             $orderId = $cart->getLastOrderId();
-            $lastOrderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
             $order = Mage::getModel('sales/order')->load($orderId);
             $ordered_items = $order->getAllItems();
             $i = 0;
@@ -165,10 +171,27 @@ class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template
 
                 $i++;
             }
-            return $product;
+        } else {
+            //We must be still in the checkout process.
+            Mage::log("Getting cart items on the checkout process (before confirmation page)");
+            $i = 0;
+            foreach ($cart->getQuote()->getAllItems() as $item) {
+                $product[$i]['productId'] = $item->getProductId();
+                $product[$i]['sku'] = $item->getSku();
+                $product[$i]['name'] = $item->getName();
+                $product[$i]['qty'] = $item->getQty();
+                $product[$i]['price'] = $item->getPrice();
+                $catIds = $item->getProduct()->getCategoryIds();
+                $category = array();
+                foreach ($catIds AS $cid) {
+                    $category[] = Mage::getModel('catalog/category')->load($cid)->getName();
+                }
+                $product[$i]['category'] = implode(',', $category);
+                $i++;
+            }
         }
 
-        Mage::log("Not in a cart module. No need to tag cart items");
+        return $product;
     }
 
 }
