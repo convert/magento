@@ -37,34 +37,56 @@ class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template
     {
         $request = $this->getRequest();
         $module = $request->getModuleName();
+        $controller = $request->getControllerName();
         $action = $request->getActionName();
 
         $orderDet = array();
         //Only tag shopping cart pages.
-        if ($module == 'checkout') {
-            Mage::log("Getting order details for checkout");
-            $lastOrderId = Mage::getSingleton('checkout/session')
-                ->getLastRealOrderId();
-            $orderId = Mage::getModel('sales/order')
-                ->loadByIncrementId($lastOrderId)
-                ->getEntityId();
-            $order = Mage::getModel('sales/order')->load($orderId);
-            $_totalData = $order->getData();
-
-            $orderDet['grand_total'] = $_totalData['base_grand_total'];
-            $orderDet['coupon_code'] = $_totalData['coupon_code'];
-            $orderDet['discount'] = abs($_totalData['base_discount_amount']);
-            $orderDet['tax'] = $_totalData['base_tax_amount'];
-            $orderDet['orderid'] = $_totalData['increment_id'];
-            $orderDet['shipping_total'] = $_totalData['base_shipping_amount'];
-            $orderDet['quote_id'] = 'successpage';
-            if ($action == 'success') {
-               $orderDet['orderid'] =  $_totalData['increment_id'];
-            }
+        if ($module != 'checkout') {
+            Mage::log("Not in a cart module. No need to tag order details");
             return $orderDet;
         }
 
-        Mage::log("Not in a cart module. No need to show order details");
+        if ($module == 'checkout') {
+            //This is an order confirmation page.
+            if ($controller == 'onepage' && $action == 'success') {
+                Mage::log("Getting order details on confirmation page.");
+                $lastOrderId = Mage::getSingleton('checkout/session')
+                    ->getLastRealOrderId();
+                $orderId = Mage::getModel('sales/order')
+                    ->loadByIncrementId($lastOrderId)
+                    ->getEntityId();
+                $order = Mage::getModel('sales/order')->load($orderId);
+                $_totalData = $order->getData();
+
+                $orderDet['grand_total'] = $_totalData['base_grand_total'];
+                $orderDet['coupon_code'] = $_totalData['coupon_code'];
+                $orderDet['discount'] = abs($_totalData['base_discount_amount']);
+                $orderDet['tax'] = $_totalData['base_tax_amount'];
+                $orderDet['orderid'] = $_totalData['increment_id'];
+                $orderDet['shipping_total'] = $_totalData['base_shipping_amount'];
+
+                // TODO: quote_id is used by phtml to determine whether there was a purchase or not.
+                // this is bad and should be replaced by a proper object.
+                $orderDet['quote_id'] = 'successpage';
+                if ($action == 'success') {
+                    $orderDet['orderid'] =  $_totalData['increment_id'];
+                }
+            } else {
+                //Anywhere else in the checkout process.
+                Mage::log("Getting order details on the checkout process (before confirmation page)");
+
+                $cart = Mage::getSingleton('checkout/session');
+                $quote_id = $cart->getQuoteId();
+                $item_quote = Mage::getModel('sales/quote')->load($quote_id);
+
+                $orderDet['grand_total'] = $item_quote->grand_total;
+                $orderDet['coupon_code'] = $item_quote->coupon_code;
+                $orderDet['discount'] = $item_quote->subtotal - $item_quote->subtotal_with_discount;
+                $orderDet['quote_id'] = $quote_id;
+            }
+        }
+        return $orderDet;
 
     }
 
