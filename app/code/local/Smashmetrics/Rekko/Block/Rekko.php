@@ -44,7 +44,7 @@ class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template
         //Only tag shopping cart pages.
         if ($module != 'checkout') {
             Mage::log("Not in a cart module. No need to tag order details");
-            return $orderDet;
+            return Null;
         }
 
         //If this is an order confirmation page.
@@ -140,12 +140,10 @@ class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template
         $action = $request->getActionName();
         $cart = Mage::getSingleton('checkout/session');
 
-        $product = array();
-
         //Only tag on checkout pages.
         if ($module != 'checkout') {
-            Mage::log("Not in a cart module. No need to tag order details");
-            return $product;
+            Mage::log("Not in a cart module. No need to tag order details returning an empty array");
+            return Null;
         }
 
         //If this is an order confirmation page.
@@ -153,45 +151,42 @@ class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template
             Mage::log("Getting cart items on confirmation page.");
             $orderId = $cart->getLastOrderId();
             $order = Mage::getModel('sales/order')->load($orderId);
-            $ordered_items = $order->getAllItems();
-            $i = 0;
-            foreach ($ordered_items as $item) {
-                $product[$i]['productId'] = $item->getProductId();
-                $product[$i]['sku'] = $item->getSku();
-                $product[$i]['name'] = $item->getName();
-                $product[$i]['qty'] = $item->getQtyOrdered();
-                $product[$i]['price'] = $item->getPrice();
-                $_product = Mage::getModel('catalog/product')->load($product[$i]['productId']);
-                $category = array();
-                $catIds = $_product->getCategoryIds();
-                foreach ($catIds AS $cid) {
-                    $category[] = Mage::getModel('catalog/category')->load($cid)->getName();
-                }
-                $product[$i]['category'] = implode(',', $category);
-
-                $i++;
-            }
+            //Get all the visible items (this means parent skus only)
+            $cartItems = $order->getAllVisibleItems();
         } else {
+            //We are in the checkout process so get teh quote instead.
             //We must be still in the checkout process.
             Mage::log("Getting cart items on the checkout process (before confirmation page)");
-            $i = 0;
-            foreach ($cart->getQuote()->getAllItems() as $item) {
-                $product[$i]['productId'] = $item->getProductId();
-                $product[$i]['sku'] = $item->getSku();
-                $product[$i]['name'] = $item->getName();
-                $product[$i]['qty'] = $item->getQty();
-                $product[$i]['price'] = $item->getPrice();
-                $catIds = $item->getProduct()->getCategoryIds();
-                $category = array();
-                foreach ($catIds AS $cid) {
-                    $category[] = Mage::getModel('catalog/category')->load($cid)->getName();
-                }
-                $product[$i]['category'] = implode(',', $category);
-                $i++;
+            //Get all the visible items (this means parent skus only)
+            $cartItems = $cart->getQuote()->getAllVisibleItems();
+        }
+        $items = array();
+        $i = 0;
+
+        foreach ($cartItems as $item) {
+            $items[$i]['productId'] = $item->getProductId();
+            $items[$i]['sku'] = $item->getSku();
+            $items[$i]['name'] = $item->getName();
+            //When we are on the confirmation page the method is called getQtyOrdered
+            //During checkout it is called getQty
+            if (method_exists($item, "getQtyOrdered")) {
+                $items[$i]['qty'] = $item->getQtyOrdered();
+            } else {
+                $items[$i]['qty'] = $item->getQty();
             }
+            $items[$i]['price'] = $item->getPrice();
+            $_product = Mage::getModel('catalog/product')->load($items[$i]['productId']);
+            $category = array();
+            $catIds = $_product->getCategoryIds();
+            foreach ($catIds AS $cid) {
+                $category[] = Mage::getModel('catalog/category')->load($cid)->getName();
+            }
+            $items[$i]['category'] = implode(',', $category);
+
+            $i++;
         }
 
-        return $product;
+        return $items;
     }
 
 }
