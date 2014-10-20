@@ -105,7 +105,7 @@ class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template
             $action = $request->getActionName();
             $guestUser = array();
             if ($module == 'checkout' && $controller == 'onepage' && $action == 'success') {
-                Mage::log("Getting customer details for anonymouse checkout");
+                Mage::log("Getting customer details for an anonymous checkout at the conformation page");
                 $cart = Mage::getSingleton('checkout/session');
                 $orderId = $cart->getLastOrderId();
 
