@@ -169,9 +169,11 @@ class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template
             $items[$i]['name'] = $item->getName();
             //When we are on the confirmation page the method is called getQtyOrdered
             //During checkout it is called getQty
-            if (method_exists($item, "getQtyOrdered")) {
+            if ($controller == 'onepage' && $action == 'success') {
+                Mage::log("Getting quantity on confirmation page");
                 $items[$i]['qty'] = $item->getQtyOrdered();
             } else {
+                Mage::log("Getting quantity on checkout page");
                 $items[$i]['qty'] = $item->getQty();
             }
             $items[$i]['price'] = $item->getPrice();
