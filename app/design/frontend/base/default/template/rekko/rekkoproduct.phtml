@@ -2,7 +2,7 @@
 $moduleName = 'Smashmetrics_Rekko'; //eg Mage_Cms
 $merchantID = Mage::getStoreConfig('rekko_section/rekko_group/merchant_ID');
 $domain_name = Mage::getStoreConfig('rekko_section/rekko_group/domain_name');
-$disabled = Mage::getStoreConfig('advanced/modules_disable_output/' . $moduleName) == 0;
+$enabled = Mage::getStoreConfig('advanced/modules_disable_output/' . $moduleName) == 0;
 if ($enabled):
     $_product = Mage::registry('current_product');
     $catIds = $_product->getCategoryIds();
