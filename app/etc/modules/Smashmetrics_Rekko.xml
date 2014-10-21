@@ -3,7 +3,7 @@
     <modules>
         <Smashmetrics_Rekko>
             <active>true</active>
-            <codePool>local</codePool>
+            <codePool>community</codePool>
         </Smashmetrics_Rekko>
     </modules>
 </config>
