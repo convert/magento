@@ -1,6 +1,6 @@
 <?php
 
-class Smashmetrics_Rekko_Block_Rekko extends Mage_Core_Block_Template
+class Rekko_Tagging_Block_Tagging extends Mage_Core_Block_Template
 {
 
     public function getPluginEnabledStatus()

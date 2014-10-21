@@ -1,7 +1,7 @@
-app/code/community/Smashmetrics/ app/code/community/Smashmetrics/
+app/code/community/Rekko/ app/code/community/Rekko/
 app/design/frontend/base/default/layout/rekko.xml app/design/frontend/base/default/layout/rekko.xml
 app/design/frontend/base/default/template/rekko/ app/design/frontend/base/default/template/rekko/
 app/design/adminhtml/base/default/layout/rekko.xml app/design/adminhtml/base/default/layout/rekko.xml
 app/design/adminhtml/base/default/template/rekko/ app/design/adminhtml/base/default/template/rekko/
-app/etc/modules/Smashmetrics_Rekko.xml app/etc/modules/Smashmetrics_Rekko.xml 
+app/etc/modules/Rekko_Tagging.xml app/etc/modules/Rekko_Tagging.xml
 skin/adminhtml/default/default/rekko/ skin/adminhtml/default/default/rekko/

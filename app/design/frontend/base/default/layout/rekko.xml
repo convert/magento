@@ -17,14 +17,14 @@
   <!-- tagging on product view pages -->
   <catalog_product_view>
     <reference name="before_body_end">
-      <block type="rekko/rekko" name="rekkoproduct" template="rekko/rekkoproduct.phtml" />
+      <block type="rekko/tagging" name="rekkoproduct" template="rekko/rekkoproduct.phtml" />
     </reference>
   </catalog_product_view>
 
   <default>
     <!-- Rekko main tagging -->
     <reference name="before_body_end">
-      <block type="rekko/rekko" name="rekko" template="rekko/rekko.phtml" /> 
+      <block type="rekko/tagging" name="rekko" template="rekko/rekko.phtml" />
     </reference>
   </default>
 </layout>

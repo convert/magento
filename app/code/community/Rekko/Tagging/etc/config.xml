@@ -1,30 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
   <modules>
-    <Smashmetrics_Rekko>
+    <Rekko_Tagging>
       <version>1.0.0</version> <!-- the version of module resources -->
-    </Smashmetrics_Rekko>
+    </Rekko_Tagging>
   </modules>
   <global> <!-- global scope, also known as the default configuration area -->
-    <models>
-      <rekko>
-        <class>Smashmetrics_Rekko_Model</class>
-      </rekko>
-    </models>
     <blocks>
       <rekko>
-        <class>Smashmetrics_Rekko_Block</class>        
+        <class>Rekk_Tagging_Block</class>
       </rekko>
     </blocks> 
     <helpers> <!-- a definition of the module helpers namespace -->
       <rekko>
-        <class>Smashmetrics_Rekko_Helper</class>
+        <class>Rekko_Tagging_Helper</class>
       </rekko>
     </helpers>
     <resources>
       <rekko_setup>
         <setup>
-          <module>Smashmetrics_Rekko</module>
+          <module>Rekko_Tagging</module>
         </setup>
         <connection>
           <use>core_setup</use>
@@ -61,13 +56,13 @@
   </default>
   <admin>
     <routers>
-      <smashrekko>
+      <rekkotagging>
         <use>admin</use>
         <args>
-          <module>Smashmetrics_Rekko</module>
+          <module>Rekko_Tagging</module>
           <frontName>rekko</frontName>
         </args>
-      </smashrekko>
+      </rekkotagging>
     </routers>
   </admin>
   <adminhtml>

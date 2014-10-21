@@ -1,9 +1,9 @@
 <?xml version = "1.0"?>
 <config>
     <modules>
-        <Smashmetrics_Rekko>
+        <Rekko_Tagging>
             <active>true</active>
             <codePool>community</codePool>
-        </Smashmetrics_Rekko>
+        </Rekko_Tagging>
     </modules>
 </config>
