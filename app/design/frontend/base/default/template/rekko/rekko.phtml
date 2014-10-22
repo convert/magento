@@ -1,8 +1,6 @@
-<?php
-$merchantID = Mage::getStoreConfig('rekko_section/rekko_group/merchant_ID');
-?>
+<?php $siteID = Mage::getStoreConfig('rekko_section/rekko_group/site_ID');?>
 
-<?php if ($merchantID): ?>
+<?php if ($siteID): ?>
     <!--Script tag for setup.js-->
     <script type="text/javascript">
         var cvtJsHost = (("https:" == document.location.protocol)
@@ -76,7 +74,7 @@ $merchantID = Mage::getStoreConfig('rekko_section/rekko_group/merchant_ID');
         <!--End Visitor Profile Tagging-->
     <?php endif; ?>
     <script type="text/javascript">
-        window.convert = new Convert("<?php echo $merchantID; ?>");
+        window.convert = new Convert("<?php echo $siteID; ?>");
         convert.init();
     </script>
 <?php endif; ?>

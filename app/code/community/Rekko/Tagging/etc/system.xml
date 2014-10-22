@@ -23,16 +23,16 @@
           <show_in_website>1</show_in_website>
           <show_in_store>1</show_in_store>
           <fields>
-            <merchant_ID translate="label tooltip comment">
-              <label>Merchant ID</label>
+            <site_ID translate="label tooltip comment">
+              <label>Site ID</label>
               <sort_order>1</sort_order>
               <comment>Some comment about my field</comment>
-              <tooltip>Enter Rekko Merchant ID</tooltip>
+              <tooltip>Enter Site ID</tooltip>
               <show_in_default>1</show_in_default>
               <show_in_website>1</show_in_website>
               <show_in_store>1</show_in_store>
               <frontend_type>text</frontend_type>
-            </merchant_ID>
+            </site_ID>
           </fields>
         </rekko_group>
         

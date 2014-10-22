@@ -8,9 +8,9 @@ class Rekko_Tagging_Block_Tagging extends Mage_Core_Block_Template
         return Mage::getStoreConfig('rekko_section/rekko_group/enabled', Mage::app()->getStore());
     }
 
-    public function getRekkoMerchantID()
+    public function getSiteId()
     {
-        return Mage::getStoreConfig('rekko_section/rekko_group/merchant_ID',
+        return Mage::getStoreConfig('rekko_section/rekko_group/site_ID',
             Mage::app()->getStore());
     }
 
