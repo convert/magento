@@ -1,10 +1,8 @@
 <?php
-$moduleName = 'Smashmetrics_Rekko'; //eg Mage_Cms
 $merchantID = Mage::getStoreConfig('rekko_section/rekko_group/merchant_ID');
-$disabled = Mage::getStoreConfig('advanced/modules_disable_output/' . $moduleName);
 ?>
 
-<?php if ($disabled == 0): ?>
+<?php if ($merchantID): ?>
     <!--Script tag for setup.js-->
     <script type="text/javascript">
         var cvtJsHost = (("https:" == document.location.protocol)
