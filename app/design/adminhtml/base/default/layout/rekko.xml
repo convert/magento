@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <layout>
-  <smashrekko_info_index>
+  <rekko_info_index>
     <reference name="head">
       <action method="addCss">
         <name>rekko/css/rekko.css</name>
@@ -9,6 +9,6 @@
     <reference name="content">
       <block type="adminhtml/template" name="rekko_info" template="rekko/info.phtml"/>
     </reference>
-  </smashrekko_info_index>
+  </rekko_info_index>
 </layout>
 

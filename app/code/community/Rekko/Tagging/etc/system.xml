@@ -1,10 +1,10 @@
 <?xml version="1.0" ?>
 <config>
   <tabs>
-    <smashmetricsrekko module="rekko" translate="label">
+    <rekkotagging module="rekko" translate="label">
       <label>Rekko</label>
       <sort_order>100</sort_order>
-    </smashmetricsrekko>
+    </rekkotagging>
   </tabs>
   <sections>
     <rekko_section module="rekko" translate="label">
@@ -13,7 +13,7 @@
       <show_in_default>1</show_in_default>
       <show_in_website>1</show_in_website>
       <show_in_store>1</show_in_store>
-      <tab>smashmetricsrekko</tab>
+      <tab>rekkotagging</tab>
       <groups>
         <rekko_group translate="label">
           <label>Settings</label>
@@ -26,7 +26,6 @@
             <site_ID translate="label tooltip comment">
               <label>Site ID</label>
               <sort_order>1</sort_order>
-              <comment>Some comment about my field</comment>
               <tooltip>Enter Site ID</tooltip>
               <show_in_default>1</show_in_default>
               <show_in_website>1</show_in_website>
