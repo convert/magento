@@ -8,9 +8,9 @@
   <global> <!-- global scope, also known as the default configuration area -->
     <blocks>
       <rekko>
-        <class>Rekk_Tagging_Block</class>
+        <class>Rekko_Tagging_Block</class>
       </rekko>
-    </blocks> 
+    </blocks>
     <helpers> <!-- a definition of the module helpers namespace -->
       <rekko>
         <class>Rekko_Tagging_Helper</class>
